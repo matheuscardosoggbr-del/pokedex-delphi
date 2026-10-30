@@ -265,12 +265,15 @@ begin
     Topo := 48 + I * 24;
     Texto := TLabel.Create(Panel2);
     Texto.Parent := Panel2;
+    Texto.Tag := 99;
     Texto.SetBounds(12, Topo, 72, 20);
     Texto.Caption := Nome;
     Texto.Font.Color := clWhite;
 
     Fundo := TPanel.Create(Panel2);
     Fundo.Parent := Panel2;
+    Fundo.Tag := 99;
+    Fundo.ParentBackground := False;
     Fundo.SetBounds(112, Topo + 3, 80, 14);
     Fundo.BevelOuter := bvNone;
     Fundo.Color := clGray;
@@ -278,14 +281,18 @@ begin
     Tamanho := Round(Valor * 0.8);
     Barra := TPanel.Create(Panel2);
     Barra.Parent := Panel2;
+    Barra.Tag := 99;
+    Barra.ParentBackground := False;
     Barra.SetBounds(112, Topo + 3, Tamanho, 14);
     Barra.BevelOuter := bvNone;
     Barra.Color := clLime;
+    Barra.BringToFront;
   end;
 
   Texto := TLabel.Create(Panel2);
   Texto.Parent := Panel2;
-  Texto.SetBounds(12, 194, 170, 20);
+    Texto.Tag := 99;
+    Texto.SetBounds(12, 194, 170, 20);
   Texto.Caption := 'Total: ' + IntToStr(Total);
   Texto.Font.Color := clWhite;
   Texto.Font.Style := [fsBold];
