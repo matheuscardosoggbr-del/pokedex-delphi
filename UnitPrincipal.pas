@@ -221,6 +221,7 @@ var
   LJsonObj: TJSONObject;
   LresultsArray: TJSONArray;
   LitemObj: TJSONObject;
+  PokemonObj: TJSONObject;
   I: integer;
   ListItem: TListItem;
 begin
@@ -269,8 +270,8 @@ begin
               begin
                 LitemObj := LresultsArray.Items[I] as TJSONObject;
                 ListItem := ListPokémon.Items.Add;
-                if LitemObj.GetValue<TJSONObject>('pokemon') <> nil then
-                  ListItem.Caption := LitemObj.GetValue<TJSONObject>('pokemon').GetValue<string>('name')
+                if LitemObj.TryGetValue<TJSONObject>('pokemon', PokemonObj) then
+                  ListItem.Caption := PokemonObj.GetValue<string>('name')
                 else
                   ListItem.Caption := LitemObj.GetValue<string>('name');
               end;
