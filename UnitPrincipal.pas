@@ -97,6 +97,8 @@ procedure TForm1.BpesquisarClick(Sender: TObject);
 var
   NomePokemon, UrlImagem: string;
   LJsonObj: TJSONObject;
+  Tipos: TJSONArray;
+  TipoItem: TJSONObject;
   Altura, Peso: double;
   IdPokemon: Integer;
   LBytes: TBytes;
@@ -143,6 +145,22 @@ begin
 
 
         LExperiencia.Caption := LJsonObj.GetValue<string>('base_experience');
+
+        Ltype1.Caption := '';
+        Ltype2.Caption := '';
+        if LJsonObj.TryGetValue<TJSONArray>('types', Tipos) then
+        begin
+          if Tipos.Count > 0 then
+          begin
+            TipoItem := Tipos.Items[0] as TJSONObject;
+            Ltype1.Caption := UpperCase(TipoItem.GetValue<TJSONObject>('type').GetValue<string>('name'));
+          end;
+          if Tipos.Count > 1 then
+          begin
+            TipoItem := Tipos.Items[1] as TJSONObject;
+            Ltype2.Caption := UpperCase(TipoItem.GetValue<TJSONObject>('type').GetValue<string>('name'));
+          end;
+        end;
         UrlImagem := LJsonObj.GetValue<TJSONObject>('sprites').GetValue<string>('front_default');
 
         if Trim(UrlImagem) <> '' then
