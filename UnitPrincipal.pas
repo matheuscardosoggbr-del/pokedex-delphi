@@ -98,9 +98,14 @@ var
   NomePokemon, UrlImagem: string;
   LJsonObj: TJSONObject;
   Tipos: TJSONArray;
+  Estatisticas: TJSONArray;
   TipoItem: TJSONObject;
+  EstatisticaItem: TJSONObject;
   Altura, Peso: double;
   IdPokemon: Integer;
+  ValorEstatistica: Integer;
+  TextoEstatisticas: string;
+  I: Integer;
   LBytes: TBytes;
   LStreamImg: TMemoryStream;
 begin
@@ -145,6 +150,18 @@ begin
 
 
         LExperiencia.Caption := LJsonObj.GetValue<string>('base_experience');
+
+        TextoEstatisticas := '';
+        if LJsonObj.TryGetValue<TJSONArray>('stats', Estatisticas) then
+          for I := 0 to Estatisticas.Count - 1 do
+          begin
+            EstatisticaItem := Estatisticas.Items[I] as TJSONObject;
+            ValorEstatistica := EstatisticaItem.GetValue<Integer>('base_stat');
+            TextoEstatisticas := TextoEstatisticas +
+              EstatisticaItem.GetValue<TJSONObject>('stat').GetValue<string>('name') + ': ' +
+              IntToStr(ValorEstatistica) + '  ';
+          end;
+        Lcategoria.Caption := TextoEstatisticas;
 
         Ltype1.Caption := '';
         Ltype2.Caption := '';
