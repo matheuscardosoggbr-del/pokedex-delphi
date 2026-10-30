@@ -71,6 +71,7 @@ type
     procedure CbGeraClick(Sender: TObject);
     procedure ListPokémonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
   private
+    procedure ConfigurarApi;
     procedure LimparDados;
     procedure CarregarListaPokemons;
   public
