@@ -90,7 +90,117 @@
           ParentBiDiMode = False
           ParentBackground = False
           TabOrder = 2
-          object Bevel1: TBevel
+          object LStatusHP: TLabel
+            Left = 12
+            Top = 48
+            Width = 45
+            Height = 14
+            Caption = ''
+            Font.Color = clWhite
+            ParentFont = False
+          end
+          object LStatusAtaque: TLabel
+            Left = 12
+            Top = 72
+            Width = 45
+            Height = 14
+            Caption = ''
+            Font.Color = clWhite
+            ParentFont = False
+          end
+          object LStatusDefesa: TLabel
+            Left = 12
+            Top = 96
+            Width = 45
+            Height = 14
+            Caption = ''
+            Font.Color = clWhite
+            ParentFont = False
+          end
+          object LStatusAtEsp: TLabel
+            Left = 12
+            Top = 120
+            Width = 45
+            Height = 14
+            Caption = ''
+            Font.Color = clWhite
+            ParentFont = False
+          end
+          object LStatusDefEsp: TLabel
+            Left = 12
+            Top = 144
+            Width = 45
+            Height = 14
+            Caption = ''
+            Font.Color = clWhite
+            ParentFont = False
+          end
+          object LStatusVelocidade: TLabel
+            Left = 12
+            Top = 168
+            Width = 70
+            Height = 14
+            Caption = ''
+            Font.Color = clWhite
+            ParentFont = False
+          end
+          object BarStatusHP: TProgressBar
+            Left = 112
+            Top = 48
+            Width = 80
+            Height = 14
+            Max = 255
+            TabOrder = 1
+          end
+          object BarStatusAtaque: TProgressBar
+            Left = 112
+            Top = 72
+            Width = 80
+            Height = 14
+            Max = 255
+            TabOrder = 2
+          end
+          object BarStatusDefesa: TProgressBar
+            Left = 112
+            Top = 96
+            Width = 80
+            Height = 14
+            Max = 255
+            TabOrder = 3
+          end
+          object BarStatusAtEsp: TProgressBar
+            Left = 112
+            Top = 120
+            Width = 80
+            Height = 14
+            Max = 255
+            TabOrder = 4
+          end
+          object BarStatusDefEsp: TProgressBar
+            Left = 112
+            Top = 144
+            Width = 80
+            Height = 14
+            Max = 255
+            TabOrder = 5
+          end
+          object BarStatusVelocidade: TProgressBar
+            Left = 112
+            Top = 168
+            Width = 80
+            Height = 14
+            Max = 255
+            TabOrder = 6
+          end
+          object LStatusTotal: TLabel
+            Left = 12
+            Top = 194
+            Width = 90
+            Height = 14
+            Caption = ''
+            Font.Style = [fsBold]
+            ParentFont = False
+          end          object Bevel1: TBevel
             Left = 35
             Top = 136
             Width = 150

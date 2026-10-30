@@ -1,4 +1,4 @@
-unit UnitPrincipal;
+ï»¿unit UnitPrincipal;
 
 interface
 
@@ -17,6 +17,11 @@ type
     Panel3: TPanel;
     Panel4: TPanel;
     Panel6: TPanel;
+    LStatusHP, LStatusAtaque, LStatusDefesa: TLabel;
+    LStatusAtEsp, LStatusDefEsp, LStatusVelocidade: TLabel;
+    BarStatusHP, BarStatusAtaque, BarStatusDefesa: TProgressBar;
+    BarStatusAtEsp, BarStatusDefEsp, BarStatusVelocidade: TProgressBar;
+    LStatusTotal: TLabel;
     Panel5: TPanel;
     Bevel2: TBevel;
     Panel7: TPanel;
@@ -45,11 +50,11 @@ type
     Lpeso: TLabel;
     LAltura: TLabel;
     LId: TLabel;
-    Traço: TLabel;
+    Traï¿½o: TLabel;
     Lnome: TLabel;
     Image1: TImage;
     ImagePokemon: TImage;
-    ListPokémon: TListView;
+    ListPokï¿½mon: TListView;
     EnomePoke: TButtonedEdit;
     ImageFundo: TImage;
     Image2: TImage;
@@ -70,7 +75,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure CbGeraClick(Sender: TObject);
     procedure CbTipoClick(Sender: TObject);
-    procedure ListPokémonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+    procedure ListPokï¿½monSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
   private
     function TipoSelecionado: string;
     procedure ConfigurarApi;
@@ -116,7 +121,7 @@ begin
   if NomePokemon = '' then
   begin
     LimparDados;
-    ShowMessage('Deve introduzir um nome válido');
+    ShowMessage('Deve introduzir um nome vï¿½lido');
     Exit;
   end;
 
@@ -164,7 +169,7 @@ begin
           end;
         Panel6.Caption := 'Status Base';
         MostrarEstatisticas(Estatisticas);
-        Lcategoria.Caption := 'Pokémon';
+        Lcategoria.Caption := 'Pokï¿½mon';
 
         Ltype1.Caption := '';
         Ltype2.Caption := '';
@@ -206,18 +211,18 @@ begin
         end
         else
         begin
-          ShowMessage('Imagem de pokémon não encontrada');
+          ShowMessage('Imagem de pokï¿½mon nï¿½o encontrada');
         end;
       end;
     end
     else
     begin
-      ShowMessage('Erro HTTP ao buscar Pokémon. Status: ' + IntToStr(RestResposta.StatusCode));
+      ShowMessage('Erro HTTP ao buscar Pokï¿½mon. Status: ' + IntToStr(RestResposta.StatusCode));
     end;
 
   except
     on E: Exception do
-      ShowMessage('Erro ao buscar o pokémon: ' + E.Message);
+      ShowMessage('Erro ao buscar o pokï¿½mon: ' + E.Message);
   end;
 end;
 
@@ -238,66 +243,42 @@ end;
 
 procedure TForm1.MostrarEstatisticas(Dados: TJSONArray);
 var
-  I, Valor, Total, Topo, Tamanho: Integer;
+  I, Valor, Total: Integer;
   Item: TJSONObject;
   Nome: string;
-  Texto: TLabel;
-  Fundo, Barra: TPanel;
 begin
-  for I := Panel2.ControlCount - 1 downto 0 do
-    if Panel2.Controls[I].Tag = 99 then
-      Panel2.Controls[I].Free;
-
+  LStatusHP.Caption := '';
+  LStatusAtaque.Caption := '';
+  LStatusDefesa.Caption := '';
+  LStatusAtEsp.Caption := '';
+  LStatusDefEsp.Caption := '';
+  LStatusVelocidade.Caption := '';
+  LStatusTotal.Caption := '';
+  BarStatusHP.Position := 0;
+  BarStatusAtaque.Position := 0;
+  BarStatusDefesa.Position := 0;
+  BarStatusAtEsp.Position := 0;
+  BarStatusDefEsp.Position := 0;
+  BarStatusVelocidade.Position := 0;
   Total := 0;
+
   for I := 0 to Dados.Count - 1 do
   begin
     Item := Dados.Items[I] as TJSONObject;
     Valor := Item.GetValue<Integer>('base_stat');
-    Total := Total + Valor;
     Nome := Item.GetValue<TJSONObject>('stat').GetValue<string>('name');
-    if Nome = 'special-attack' then Nome := 'At. Esp.';
-    if Nome = 'special-defense' then Nome := 'Def. Esp.';
-    if Nome = 'speed' then Nome := 'Velocidade';
-    if Nome = 'attack' then Nome := 'Ataque';
-    if Nome = 'defense' then Nome := 'Defesa';
-    if Nome = 'hp' then Nome := 'HP';
+    Total := Total + Valor;
 
-    Topo := 48 + I * 24;
-    Texto := TLabel.Create(Panel2);
-    Texto.Parent := Panel2;
-    Texto.Tag := 99;
-    Texto.SetBounds(12, Topo, 72, 20);
-    Texto.Caption := Nome;
-    Texto.Font.Color := clWhite;
-
-    Fundo := TPanel.Create(Panel2);
-    Fundo.Parent := Panel2;
-    Fundo.Tag := 99;
-    Fundo.ParentBackground := False;
-    Fundo.SetBounds(112, Topo + 3, 80, 14);
-    Fundo.BevelOuter := bvNone;
-    Fundo.Color := clGray;
-
-    Tamanho := Round(Valor * 0.8);
-    Barra := TPanel.Create(Panel2);
-    Barra.Parent := Panel2;
-    Barra.Tag := 99;
-    Barra.ParentBackground := False;
-    Barra.SetBounds(112, Topo + 3, Tamanho, 14);
-    Barra.BevelOuter := bvNone;
-    Barra.Color := clLime;
-    Barra.BringToFront;
+    if Nome = 'hp' then begin LStatusHP.Caption := 'HP: ' + IntToStr(Valor); BarStatusHP.Position := Valor; end;
+    if Nome = 'attack' then begin LStatusAtaque.Caption := 'Ataque: ' + IntToStr(Valor); BarStatusAtaque.Position := Valor; end;
+    if Nome = 'defense' then begin LStatusDefesa.Caption := 'Defesa: ' + IntToStr(Valor); BarStatusDefesa.Position := Valor; end;
+    if Nome = 'special-attack' then begin LStatusAtEsp.Caption := 'At. Esp.: ' + IntToStr(Valor); BarStatusAtEsp.Position := Valor; end;
+    if Nome = 'special-defense' then begin LStatusDefEsp.Caption := 'Def. Esp.: ' + IntToStr(Valor); BarStatusDefEsp.Position := Valor; end;
+    if Nome = 'speed' then begin LStatusVelocidade.Caption := 'Velocidade: ' + IntToStr(Valor); BarStatusVelocidade.Position := Valor; end;
   end;
 
-  Texto := TLabel.Create(Panel2);
-  Texto.Parent := Panel2;
-    Texto.Tag := 99;
-    Texto.SetBounds(12, 194, 170, 20);
-  Texto.Caption := 'Total: ' + IntToStr(Total);
-  Texto.Font.Color := clWhite;
-  Texto.Font.Style := [fsBold];
+  LStatusTotal.Caption := 'Total: ' + IntToStr(Total);
 end;
-
 procedure TForm1.CarregarListaPokemons;
 var
   LJsonObj: TJSONObject;
@@ -327,7 +308,7 @@ begin
       RestCliente.BaseURL := 'https://pokeapi.co/api/v2/pokemon?limit=151';
    end;
 
-   // para não perder o chamado de api antes ao carregar a lista
+   // para nï¿½o perder o chamado de api antes ao carregar a lista
    ConfigurarApi;
 
    try
@@ -335,7 +316,7 @@ begin
 
       if RestResposta.StatusCode = 200 then
       begin
-        ListPokémon.Items.Clear;
+        ListPokï¿½mon.Items.Clear;
 
         LJsonObj := RestResposta.JSONValue as TJSONObject;
         if Assigned(LJsonObj) then
@@ -346,19 +327,19 @@ begin
             end;
             if Assigned(LresultsArray) then
             begin
-              ListPokémon.Items.BeginUpdate;
+              ListPokï¿½mon.Items.BeginUpdate;
             try
               for I := 0 to LresultsArray.Count - 1 do
               begin
                 LitemObj := LresultsArray.Items[I] as TJSONObject;
-                ListItem := ListPokémon.Items.Add;
+                ListItem := ListPokï¿½mon.Items.Add;
                 if LitemObj.TryGetValue<TJSONObject>('pokemon', PokemonObj) then
                   ListItem.Caption := PokemonObj.GetValue<string>('name')
                 else
                   ListItem.Caption := LitemObj.GetValue<string>('name');
               end;
             finally
-              ListPokémon.Items.EndUpdate;
+              ListPokï¿½mon.Items.EndUpdate;
             end;
           end;
         end;
@@ -370,7 +351,7 @@ begin
 
    except
       on E: Exception do
-        ShowMessage('Erro ao carregar a lista pokémon: ' + E.Message);
+        ShowMessage('Erro ao carregar a lista pokï¿½mon: ' + E.Message);
    end;
 end;
 
@@ -397,7 +378,7 @@ procedure TForm1.FormShow(Sender: TObject);
 begin
   LimparDados;
 
-  // Para não Falhar a requisição em outras redes wifi
+  // Para nï¿½o Falhar a requisiï¿½ï¿½o em outras redes wifi
   ConfigurarApi;
 
   CbGera.ItemIndex := 0;
@@ -419,7 +400,7 @@ begin
   ImagePokemon.Picture.Graphic := nil;
 end;
 
-procedure TForm1.ListPokémonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+procedure TForm1.ListPokï¿½monSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 var
   NomePokemon: string;
 begin
