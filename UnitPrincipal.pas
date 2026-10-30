@@ -88,7 +88,7 @@ var
   NomePokemon, UrlImagem: string;
   LJsonObj: TJSONObject;
   Altura, Peso: double;
-  Id: integer;
+  IdPokemon: Integer;
   LBytes: TBytes;
   LStreamImg: TMemoryStream;
 begin
