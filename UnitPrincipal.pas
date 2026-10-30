@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, REST.Types,
   Vcl.Buttons, REST.Client, System.JSON,
-  Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.CheckLst;
+  Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.CheckLst, System.Net.HttpClientComponent;
 
 type
   TForm1 = class(TForm)
@@ -27,6 +27,7 @@ type
     RestCliente: TRESTClient;
     RestRequisicao: TRESTRequest;
     RestResposta: TRESTResponse;
+    Nethttp: TNetHTTPClient;
 
     Bpesquisar: TBitBtn;
     BitBtn2: TBitBtn;
