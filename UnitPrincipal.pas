@@ -186,10 +186,16 @@ end;
 function TForm1.TipoSelecionado: string;
 begin
   Result := '';
+  if (CbTipo.ItemIndex < 0) or not CbTipo.Checked[CbTipo.ItemIndex] then
+    Exit;
 
-  if CbTipo.ItemIndex >= 0 then
-    if CbTipo.Checked[CbTipo.ItemIndex] then
-      Result := CbTipo.Items[CbTipo.ItemIndex];
+  case CbTipo.ItemIndex of
+    0: Result := 'steel'; 1: Result := 'water'; 2: Result := 'bug';
+    3: Result := 'dragon'; 4: Result := 'electric'; 5: Result := 'fairy';
+    6: Result := 'ghost'; 7: Result := 'fire'; 8: Result := 'ice';
+    9: Result := 'bug'; 10: Result := 'fighting'; 11: Result := 'normal';
+    12: Result := 'rock'; 13: Result := 'psychic'; 14: Result := 'dark';
+  end;
 end;
 
 procedure TForm1.CarregarListaPokemons;
@@ -245,7 +251,10 @@ begin
               begin
                 LitemObj := LresultsArray.Items[I] as TJSONObject;
                 ListItem := ListPokémon.Items.Add;
-                ListItem.Caption := LitemObj.GetValue<string>('name');
+                if LitemObj.GetValue<TJSONObject>('pokemon') <> nil then
+                  ListItem.Caption := LitemObj.GetValue<TJSONObject>('pokemon').GetValue<string>('name')
+                else
+                  ListItem.Caption := LitemObj.GetValue<string>('name');
               end;
             finally
               ListPokémon.Items.EndUpdate;
