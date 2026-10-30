@@ -76,6 +76,7 @@ type
     procedure ConfigurarApi;
     procedure LimparDados;
     procedure CarregarListaPokemons;
+    procedure MostrarEstatisticas(Dados: TJSONArray);
   public
     { Public declarations }
   end;
@@ -161,7 +162,8 @@ begin
               EstatisticaItem.GetValue<TJSONObject>('stat').GetValue<string>('name') + ': ' +
               IntToStr(ValorEstatistica) + '  ';
           end;
-        Panel6.Caption := 'Status Base' + sLineBreak + TextoEstatisticas;
+        Panel6.Caption := 'Status Base';
+        MostrarEstatisticas(Estatisticas);
         Lcategoria.Caption := 'Pokémon';
 
         Ltype1.Caption := '';
@@ -232,6 +234,60 @@ begin
     9: Result := 'bug'; 10: Result := 'fighting'; 11: Result := 'normal';
     12: Result := 'rock'; 13: Result := 'psychic'; 14: Result := 'dark';
   end;
+end;
+
+procedure TForm1.MostrarEstatisticas(Dados: TJSONArray);
+var
+  I, Valor, Total, Topo, Tamanho: Integer;
+  Item: TJSONObject;
+  Nome: string;
+  Texto: TLabel;
+  Fundo, Barra: TPanel;
+begin
+  while Panel2.ControlCount > 1 do
+    Panel2.Controls[Panel2.ControlCount - 1].Free;
+
+  Total := 0;
+  for I := 0 to Dados.Count - 1 do
+  begin
+    Item := Dados.Items[I] as TJSONObject;
+    Valor := Item.GetValue<Integer>('base_stat');
+    Total := Total + Valor;
+    Nome := Item.GetValue<TJSONObject>('stat').GetValue<string>('name');
+    if Nome = 'special-attack' then Nome := 'At. Esp.';
+    if Nome = 'special-defense' then Nome := 'Def. Esp.';
+    if Nome = 'speed' then Nome := 'Velocidade';
+    if Nome = 'attack' then Nome := 'Ataque';
+    if Nome = 'defense' then Nome := 'Defesa';
+    if Nome = 'hp' then Nome := 'HP';
+
+    Topo := 48 + I * 24;
+    Texto := TLabel.Create(Panel2);
+    Texto.Parent := Panel2;
+    Texto.SetBounds(12, Topo, 72, 20);
+    Texto.Caption := Nome;
+    Texto.Font.Color := clWhite;
+
+    Fundo := TPanel.Create(Panel2);
+    Fundo.Parent := Panel2;
+    Fundo.SetBounds(112, Topo + 3, 80, 14);
+    Fundo.BevelOuter := bvNone;
+    Fundo.Color := clGray;
+
+    Tamanho := Round(Valor * 0.8);
+    Barra := TPanel.Create(Panel2);
+    Barra.Parent := Panel2;
+    Barra.SetBounds(112, Topo + 3, Tamanho, 14);
+    Barra.BevelOuter := bvNone;
+    Barra.Color := clLime;
+  end;
+
+  Texto := TLabel.Create(Panel2);
+  Texto.Parent := Panel2;
+  Texto.SetBounds(12, 194, 170, 20);
+  Texto.Caption := 'Total: ' + IntToStr(Total);
+  Texto.Font.Color := clWhite;
+  Texto.Font.Style := [fsBold];
 end;
 
 procedure TForm1.CarregarListaPokemons;
