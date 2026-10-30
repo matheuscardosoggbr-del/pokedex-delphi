@@ -69,8 +69,10 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure CbGeraClick(Sender: TObject);
+    procedure CbTipoClick(Sender: TObject);
     procedure ListPokémonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
   private
+    function TipoSelecionado: string;
     procedure ConfigurarApi;
     procedure LimparDados;
     procedure CarregarListaPokemons;
@@ -181,6 +183,15 @@ begin
   end;
 end;
 
+function TForm1.TipoSelecionado: string;
+begin
+  Result := '';
+
+  if CbTipo.ItemIndex >= 0 then
+    if CbTipo.Checked[CbTipo.ItemIndex] then
+      Result := CbTipo.Items[CbTipo.ItemIndex];
+end;
+
 procedure TForm1.CarregarListaPokemons;
 var
   LJsonObj: TJSONObject;
@@ -192,6 +203,9 @@ begin
    if CbGera.ItemIndex < 0 then
      CbGera.ItemIndex := 0;
 
+   if TipoSelecionado <> '' then
+     RestCliente.BaseURL := 'https://pokeapi.co/api/v2/type/' + LowerCase(TipoSelecionado)
+   else
    case CbGera.ItemIndex of
     0: RestCliente.BaseURL := 'https://pokeapi.co/api/v2/pokemon?limit=151';
     1: RestCliente.BaseURL := 'https://pokeapi.co/api/v2/generation/2/';
@@ -251,6 +265,11 @@ begin
 end;
 
 procedure TForm1.CbGeraClick(Sender: TObject);
+begin
+  CarregarListaPokemons;
+end;
+
+procedure TForm1.CbTipoClick(Sender: TObject);
 begin
   CarregarListaPokemons;
 end;
