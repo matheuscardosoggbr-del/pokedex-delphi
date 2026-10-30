@@ -33,6 +33,10 @@
       Margins.Right = 0
       Margins.Bottom = 0
       Caption = 'Pok'#233'dex'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel10: TPanel
         Left = 0
         Top = 0
@@ -93,56 +97,93 @@
           object LStatusHP: TLabel
             Left = 12
             Top = 48
-            Width = 45
-            Height = 14
-            Caption = ''
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             ParentFont = False
           end
           object LStatusAtaque: TLabel
             Left = 12
             Top = 72
-            Width = 45
-            Height = 14
-            Caption = ''
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             ParentFont = False
           end
           object LStatusDefesa: TLabel
             Left = 12
             Top = 96
-            Width = 45
-            Height = 14
-            Caption = ''
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             ParentFont = False
           end
           object LStatusAtEsp: TLabel
             Left = 12
             Top = 120
-            Width = 45
-            Height = 14
-            Caption = ''
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             ParentFont = False
           end
           object LStatusDefEsp: TLabel
             Left = 12
             Top = 144
-            Width = 45
-            Height = 14
-            Caption = ''
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             ParentFont = False
           end
           object LStatusVelocidade: TLabel
             Left = 12
             Top = 168
-            Width = 70
-            Height = 14
-            Caption = ''
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
             Font.Color = clWhite
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
             ParentFont = False
+          end
+          object LStatusTotal: TLabel
+            Left = 12
+            Top = 194
+            Width = 3
+            Height = 13
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Bevel1: TBevel
+            Left = 35
+            Top = 136
+            Width = 150
+            Height = 50
+            Shape = bsBottomLine
           end
           object BarStatusHP: TProgressBar
             Left = 112
@@ -191,21 +232,6 @@
             Height = 14
             Max = 255
             TabOrder = 6
-          end
-          object LStatusTotal: TLabel
-            Left = 12
-            Top = 194
-            Width = 90
-            Height = 14
-            Caption = ''
-            Font.Style = [fsBold]
-            ParentFont = False
-          end          object Bevel1: TBevel
-            Left = 35
-            Top = 136
-            Width = 150
-            Height = 50
-            Shape = bsBottomLine
           end
           object Panel6: TPanel
             Left = 1
@@ -2631,7 +2657,7 @@
             end
           end
         end
-        object ListPokémon: TListView
+        object ListaPokemon: TListView
           Left = 9
           Top = 45
           Width = 169
@@ -2647,7 +2673,7 @@
           ParentFont = False
           TabOrder = 5
           ViewStyle = vsSmallIcon
-          OnSelectItem = ListPokémonSelectItem
+          OnSelectItem = ListaPokemonSelectItem
         end
         object EnomePoke: TButtonedEdit
           Left = 9
@@ -2673,6 +2699,10 @@
       Margins.Bottom = 0
       Caption = 'Time Pok'#233'mon'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
   object Panel1: TPanel
@@ -4407,6 +4437,10 @@
     TabOrder = 2
     object TabSheet3: TTabSheet
       Caption = 'Filtros'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel12: TPanel
         Left = 3
         Top = 0

@@ -54,7 +54,7 @@ type
     Lnome: TLabel;
     Image1: TImage;
     ImagePokemon: TImage;
-    ListPok�mon: TListView;
+    ListaPokemon: TListView;
     EnomePoke: TButtonedEdit;
     ImageFundo: TImage;
     Image2: TImage;
@@ -75,7 +75,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure CbGeraClick(Sender: TObject);
     procedure CbTipoClick(Sender: TObject);
-    procedure ListPok�monSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+    procedure ListaPokemonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
   private
     function TipoSelecionado: string;
     procedure ConfigurarApi;
@@ -316,7 +316,7 @@ begin
 
       if RestResposta.StatusCode = 200 then
       begin
-        ListPok�mon.Items.Clear;
+        ListaPokemon.Items.Clear;
 
         LJsonObj := RestResposta.JSONValue as TJSONObject;
         if Assigned(LJsonObj) then
@@ -327,19 +327,19 @@ begin
             end;
             if Assigned(LresultsArray) then
             begin
-              ListPok�mon.Items.BeginUpdate;
+              ListaPokemon.Items.BeginUpdate;
             try
               for I := 0 to LresultsArray.Count - 1 do
               begin
                 LitemObj := LresultsArray.Items[I] as TJSONObject;
-                ListItem := ListPok�mon.Items.Add;
+                ListItem := ListaPokemon.Items.Add;
                 if LitemObj.TryGetValue<TJSONObject>('pokemon', PokemonObj) then
                   ListItem.Caption := PokemonObj.GetValue<string>('name')
                 else
                   ListItem.Caption := LitemObj.GetValue<string>('name');
               end;
             finally
-              ListPok�mon.Items.EndUpdate;
+              ListaPokemon.Items.EndUpdate;
             end;
           end;
         end;
@@ -400,7 +400,7 @@ begin
   ImagePokemon.Picture.Graphic := nil;
 end;
 
-procedure TForm1.ListPok�monSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+procedure TForm1.ListaPokemonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 var
   NomePokemon: string;
 begin
