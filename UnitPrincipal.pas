@@ -244,8 +244,9 @@ var
   Texto: TLabel;
   Fundo, Barra: TPanel;
 begin
-  while Panel2.ControlCount > 1 do
-    Panel2.Controls[Panel2.ControlCount - 1].Free;
+  for I := Panel2.ControlCount - 1 downto 0 do
+    if Panel2.Controls[I].Tag = 99 then
+      Panel2.Controls[I].Free;
 
   Total := 0;
   for I := 0 to Dados.Count - 1 do
