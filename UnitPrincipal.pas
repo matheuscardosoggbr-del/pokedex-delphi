@@ -111,7 +111,7 @@ var
 begin
   ImageFundo.SendToBack;
 
-  NomePokemon := Trim(EnomePoke.Text);
+  NomePokemon := LowerCase(Trim(EnomePoke.Text));
   if NomePokemon = '' then
   begin
     LimparDados;
@@ -347,6 +347,9 @@ begin
   laltura.Caption := '';
   lpeso.Caption := '';
   Lexperiencia.Caption := '';
+  Lcategoria.Caption := '';
+  Ltype1.Caption := '';
+  Ltype2.Caption := '';
   ImagePokemon.Picture.Graphic := nil;
 end;
 
