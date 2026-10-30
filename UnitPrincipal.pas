@@ -3,10 +3,10 @@ unit UnitPrincipal;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, REST.Types,
-  Vcl.Buttons, REST.Client, Data.Bind.Components, System.JSON, Data.Bind.ObjectScope,
-  Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.CheckLst, System.Net.URLClient, System.Net.HttpClient, System.Net.HttpClientComponent;
+  Vcl.Buttons, REST.Client, System.JSON,
+  Vcl.ComCtrls, Vcl.Imaging.pngimage, Vcl.CheckLst;
 
 type
   TForm1 = class(TForm)
@@ -27,7 +27,7 @@ type
     RestCliente: TRESTClient;
     RestRequisicao: TRESTRequest;
     RestResposta: TRESTResponse;
-    Nethttp: TNetHTTPClient;
+
     Bpesquisar: TBitBtn;
     BitBtn2: TBitBtn;
     Bevel5: TBevel;
@@ -85,26 +85,25 @@ implementation
 
 procedure TForm1.BpesquisarClick(Sender: TObject);
 var
-  LnomePokemon, LImgPoke: string;
+  NomePokemon, UrlImagem: string;
   LJsonObj: TJSONObject;
-  LalturaPoke, LpesoPoke: double;
+  Altura, Peso: double;
   Id: integer;
   LBytes: TBytes;
   LStreamImg: TMemoryStream;
 begin
   ImageFundo.SendToBack;
 
-  lnomePokemon := Trim(EnomePoke.Text);
-  if lnomePokemon = EmptyStr then
+  NomePokemon := Trim(EnomePoke.Text);
+  if NomePokemon = '' then
   begin
     LimparDados;
     ShowMessage('Deve introduzir um nome válido');
     Exit;
   end;
 
-  // configura o rest-agent para não dar forbiden 403
   RestCliente.UserAgent := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
-  RestCliente.BaseURL := 'https://pokeapi.co/api/v2/pokemon/' + lnomePokemon;
+  RestCliente.BaseURL := 'https://pokeapi.co/api/v2/pokemon/' + NomePokemon;
   RestRequisicao.Method := rmGET;
 
   try
@@ -116,32 +115,30 @@ begin
       LJsonObj := RestResposta.JSONValue as TJSONObject;
       if Assigned(LJsonObj) then
       begin
-        if LJsonObj.TryGetValue<integer>('id', id) then
-        begin
-          lId.Caption := Format('%.4d', [id]);
-        end;
+        LJsonObj.TryGetValue<Integer>('id', IdPokemon);
+        LId.Caption := Format('%.4d', [IdPokemon]);
 
         Lnome.Caption := LJsonObj.GetValue<string>('name');
 
-        if LJsonObj.TryGetValue<Double>('height', LalturaPoke) then
+        if LJsonObj.TryGetValue<Double>('height', Altura) then
         begin
-          LAltura.Caption := FormatFloat('0.0', LalturaPoke / 10) + 'm';
+          LAltura.Caption := FormatFloat('0.0', Altura / 10) + 'm';
         end;
 
-        if LJsonObj.TryGetValue<double>('weight', LpesoPoke) then
+        if LJsonObj.TryGetValue<double>('weight', Peso) then
         begin
-          Lpeso.Caption := FormatFloat('0.0', LpesoPoke / 10) + 'Kg';
+          Lpeso.Caption := FormatFloat('0.0', Peso / 10) + 'Kg';
         end;
 
 
 
 
         LExperiencia.Caption := LJsonObj.GetValue<string>('base_experience');
-        LimgPoke := LJsonObj.GetValue<TJSONObject>('sprites').GetValue<string>('front_default');
+        UrlImagem := LJsonObj.GetValue<TJSONObject>('sprites').GetValue<string>('front_default');
 
-        if Trim(LimgPoke) <> '' then
+        if Trim(UrlImagem) <> '' then
         begin
-          RestCliente.BaseURL := LimgPoke;
+          RestCliente.BaseURL := UrlImagem;
           RestRequisicao.Execute;
 
           if RestResposta.StatusCode = 200 then
@@ -285,7 +282,7 @@ end;
 
 procedure TForm1.ListPokémonSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 var
-  TextoSelecionado, NomePokemon: string;
+  NomePokemon: string;
 begin
   if Selected and Assigned(Item) then
   begin
