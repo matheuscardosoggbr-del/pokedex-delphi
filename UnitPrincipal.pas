@@ -84,6 +84,12 @@ implementation
 
 {$R *.dfm}
 
+procedure TForm1.ConfigurarApi;
+begin
+  RestCliente.UserAgent := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  RestRequisicao.Method := rmGET;
+end;
+
 procedure TForm1.BpesquisarClick(Sender: TObject);
 var
   NomePokemon, UrlImagem: string;
@@ -103,9 +109,8 @@ begin
     Exit;
   end;
 
-  RestCliente.UserAgent := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  ConfigurarApi;
   RestCliente.BaseURL := 'https://pokeapi.co/api/v2/pokemon/' + NomePokemon;
-  RestRequisicao.Method := rmGET;
 
   try
     RestRequisicao.Execute;
@@ -201,8 +206,7 @@ begin
    end;
 
    // para não perder o chamado de api antes ao carregar a lista
-   RestCliente.UserAgent := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
-   RestRequisicao.Method := rmGET;
+   ConfigurarApi;
 
    try
       RestRequisicao.Execute;
@@ -264,7 +268,7 @@ begin
   LimparDados;
 
   // Para não Falhar a requisição em outras redes wifi
-  RestCliente.UserAgent := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  ConfigurarApi;
 
   CbGera.ItemIndex := 0;
   CarregarListaPokemons;
