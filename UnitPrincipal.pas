@@ -161,7 +161,8 @@ begin
               EstatisticaItem.GetValue<TJSONObject>('stat').GetValue<string>('name') + ': ' +
               IntToStr(ValorEstatistica) + '  ';
           end;
-        Lcategoria.Caption := TextoEstatisticas;
+        Panel6.Caption := 'Status Base' + sLineBreak + TextoEstatisticas;
+        Lcategoria.Caption := 'Pokémon';
 
         Ltype1.Caption := '';
         Ltype2.Caption := '';
@@ -348,6 +349,7 @@ begin
   lpeso.Caption := '';
   Lexperiencia.Caption := '';
   Lcategoria.Caption := '';
+  Panel6.Caption := 'Status Base';
   Ltype1.Caption := '';
   Ltype2.Caption := '';
   ImagePokemon.Picture.Graphic := nil;
