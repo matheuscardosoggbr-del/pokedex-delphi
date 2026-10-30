@@ -1,0 +1,11 @@
+*.dproj.local
+*.identcache
+Win32/
+Win64/
+Debug/
+Release/
+__history/
+__recovery/
+*.tmp
+*.~pas
+*.~dfm
