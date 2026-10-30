@@ -1,4 +1,4 @@
-object Form1: TForm1
+ï»¿object Form1: TForm1
   Left = 0
   Top = 0
   BorderStyle = bsSingle
@@ -155,7 +155,7 @@ object Form1: TForm1
             Font.Style = [fsBold]
             ParentFont = False
           end
-          object Traço: TLabel
+          object TraÃ§o: TLabel
             Left = 114
             Top = 17
             Width = 9
@@ -2521,7 +2521,7 @@ object Form1: TForm1
             end
           end
         end
-        object ListPokémon: TListView
+        object ListPokÃ©mon: TListView
           Left = 9
           Top = 45
           Width = 169
@@ -2537,7 +2537,7 @@ object Form1: TForm1
           ParentFont = False
           TabOrder = 5
           ViewStyle = vsSmallIcon
-          OnSelectItem = ListPokémonSelectItem
+          OnSelectItem = ListPokÃ©monSelectItem
         end
         object EnomePoke: TButtonedEdit
           Left = 9
